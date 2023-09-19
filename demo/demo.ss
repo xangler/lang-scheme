@@ -1,0 +1,57 @@
+(define (println f)
+    (begin
+        (display f)
+        (newline)
+    )
+)
+
+(define (fn n)
+    (if (<= n 2)
+        1
+        (+ (fn (- n 1)) (fn (- n 2)))))
+(define (np n)
+    (* 2 ((lambda (x) (* x x)) n)))
+
+(println (np 6))
+(println  #t)
+(println (not #t))
+(println (= 42 43))
+(println (char? #\a))
+(define x 3)
+(println x)
+(set! x #\y)
+(println x)
+(define y (string-copy "hello"))
+(println (string-append y " zyf"))
+(string-set! y 1 #\a)
+(println (string-append y " world"))
+(define m '(1 '(2 3)))
+(println (cdr m))
+(println (list-ref m 1))
+(define n (make-eq-hashtable))
+(println (hashtable-size n))
+(hashtable-set! n x "zyf")
+(hashtable-set! n 'zyf "zyf")
+(println (hashtable-size n))
+(println (hashtable-keys n))
+(hashtable-delete! n 'zyf)
+(println (hashtable-keys n))
+(println (hashtable-ref n x "null"))
+
+(define list-position
+  (lambda (o l)
+    (let loop ((i 0) (l l))
+      (if (null? l) #f
+          (if (eqv? (car l) o) i
+              (loop (+ i 1) (cdr l)))))))
+(println (list-position 1 '(2 2 1 2 0)))
+(println (map (lambda (x) (+ x 1)) '(2 3 4)))
+(println (apply + '(1 2 3)))
+(let ((x 1)(y 2)) (println ( + x y)))
+
+(define (test-sum x)
+    (if (null? x) 0
+        (if (number? (car x)) (+ (car x) (test-sum (cdr x)))
+            (+ (test-sum (car x)) (test-sum (cdr x))))))
+(println (test-sum '((1 (2 2)) 2)))
+(exit)
